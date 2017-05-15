@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TopCodes Example</title>
+</head>
+
+<body>
+  <canvas id="video-canvas" width="800" height="600" style="background: #ddd;"></canvas>
+  <br/>
+  <button id="camera-button" onclick="TopCodes.startStopVideoScan('video-canvas')">Start / Stop</button>
+
+  <script src="topcodes.js"></script>
+  <script type="text/javascript" src="shapes.js"></script>
+
+  <script>
+
+  TopCodes.setVideoFrameCallback("video-canvas", function(jsonString) {
+    var json = JSON.parse(jsonString);
+    detectRect(json.topcodes);
+  });
+  
+  </script>
+
+</body>
+</html>
