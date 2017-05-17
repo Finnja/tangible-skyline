@@ -1,7 +1,25 @@
 function detectRect(topcodes) {
-    var ctx = document.querySelector("#video-canvas").getContext('2d');
-    ctx.strokeStyle="#FF0000";
+    //Background elements
+    var bcg = document.querySelector("#video-canvas").getContext('2d');
+    bcg.font = "50px Raleway";
+    bcg.fillText("Welcome to Skyline!",0,50);
+
+
+    var ctx = document.querySelector("#video-canvas").getContext('2d');    
+    ctx.strokeStyle="#0a0a0f";
+    ctx.lineWidth=5;
+
+
+    var fdbk = document.querySelector("#video-canvas").getContext('2d');    
+    fdbk.font = "17.5px Raleway";
+
+    var rectColor = "#FF0000";
+    var crossBeamColor = "#66b3ff";
+
     var used_codes = [];
+
+  
+
 
     for(i = 0; i<topcodes.length; i++) {
       console.log(topcodes[i].angle)
@@ -30,12 +48,17 @@ function detectRect(topcodes) {
         for(j = 1; j<topcodes.length; j++) { 
           if (Math.abs(topcodes[j].y - bl.y) < 65 && Math.abs(topcodes[j].x - tr.x) < 65) {
             br = topcodes[j];
+            var rect = true;
 
+           // fdbk.fillText("Awesome use of rectangles! Maybe make it more stable by...",450,450);
+
+
+            ctx.strokeStyle=rectColor;
             ctx.strokeRect(topcodes[i].x,topcodes[i].y,(br.x - topcodes[i].x),(br.y - topcodes[i].y));
             used_codes.push(topcodes[i].code, bl.code, tr.code, br.code)
 
             if (cross_beam) {
-              ctx.strokeStyle="#66b3ff";
+              ctx.strokeStyle=crossBeamColor;
               ctx.beginPath();
               ctx.moveTo(topcodes[i].x, topcodes[i].y);
               ctx.lineTo(br.x, br.y);
@@ -50,12 +73,42 @@ function detectRect(topcodes) {
               used_codes.push(cross_code);
             }
 
+            if(rect && cross_beam){
+
+              fdbk.fillText("That wall looks good! Sweet X-Brace.",450,450);
+              fdbk.fillText("Real buildings use it too!",450,470);
+              fdbk.strokeStyle='#FFFFFF';
+              fdbk.strokeRect(435,100,350,250);
+              fdbk.fillText("Image of Hancock Tower Goes Here",450,200);
+
+/*
+                var base_image = new Image();
+                base_image.src = 'hancockXBrace.jpg';
+                fdbk.drawImage(base_image, 100, 100);*/
+            }
+            else if(rect){
+              fdbk.fillText("Awesome use of rectangles!",450,450);
+              fdbk.fillText("Make it more stable by adding something.",450,470);
+              fdbk.fillText("Look at the examples or out the window",450,490);
+              fdbk.fillText("for inspriation",450,510);
+
+            }
+            else{
+              fdbk.fillText("Build Better",450,450);
+            }            
+
             return used_codes;
+
           } 
         }
       }
+      if(topcodes.length == 0){
+        fdbk.fillText("Build Better",450,450);
+            }
     }
+
   }
+
 
 
 // function detectTri(topcodes, used_codes) {
