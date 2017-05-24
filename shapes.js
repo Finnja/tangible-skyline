@@ -1,31 +1,68 @@
+function masterMethod(topcodes){
+  if(topcodes.length==2){
+    detectSingleBeam(topcodes)
+  }
+  if(topcodes.length==3){
+    detectTriangle(topcodes)
+  }
+  if(topcodes.length>3){
+    detectRect(topcodes);
+  }
+}
+
+//Function to deal with 2 top codes; draws line between the two topcodes
+function detectSingleBeam(topcodes){
+    var ctx = document.querySelector("#video-canvas").getContext('2d');    
+    ctx.strokeStyle="#0a0a0f";
+    ctx.lineWidth=5;
+
+    ctx.beginPath();
+    ctx.moveTo(topcodes[0].x, topcodes[0].y);
+    ctx.lineTo(topcodes[1].x, topcodes[1].y);
+    ctx.stroke();
+}
+
+//Function to deal with 3 top codes; automatically forms triangle between them
+function detectTriangle(topcodes){
+    var ctx = document.querySelector("#video-canvas").getContext('2d');    
+    ctx.strokeStyle="#0a0a0f";
+    ctx.lineWidth=5;
+
+    ctx.beginPath();
+    ctx.moveTo(topcodes[0].x, topcodes[0].y);
+    ctx.lineTo(topcodes[1].x, topcodes[1].y);
+    ctx.lineTo(topcodes[2].x, topcodes[2].y);
+    ctx.lineTo(topcodes[0].x, topcodes[0].y);
+    ctx.stroke();
+}
+
+
 function detectRect(topcodes) {
     //Background elements
     var bcg = document.querySelector("#video-canvas").getContext('2d');
     bcg.font = "50px Raleway";
     bcg.fillText("Welcome to Skyline!",0,50);
 
-
+    //Stroke elements
     var ctx = document.querySelector("#video-canvas").getContext('2d');    
     ctx.strokeStyle="#0a0a0f";
     ctx.lineWidth=5;
 
-
+    //Feedback elements
     var fdbk = document.querySelector("#video-canvas").getContext('2d');    
     fdbk.font = "17.5px Raleway";
-
+    fdbk.fillStyle = "#000000";
     var rectColor = "#FF0000";
     var crossBeamColor = "#66b3ff";
 
     var used_codes = [];
 
   
-
-
     for(i = 0; i<topcodes.length; i++) {
-      console.log(topcodes[i].angle)
       var tr = null;
       var bl = null;
       var br = null;
+      var tl = null;
       var cross_beam = false;
       
       for(j = 1; j<topcodes.length; j++) {
