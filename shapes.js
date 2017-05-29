@@ -153,12 +153,6 @@ function detectComplexShape(topcodes) {
     ctx.strokeStyle="#0a0a0f";
     ctx.lineWidth=5;
 
-    //Feedback elements
-    var fdbk = document.querySelector("#video-canvas").getContext('2d');    
-    fdbk.font = "17.5px Raleway";
-    fdbk.fillStyle = "#000000";
-    var rectColor = "#FF0000";
-    var crossBeamColor = "#66b3ff";
 
     var used_codes = [];
     //activeCodes will store all non-Apex Code
@@ -169,12 +163,15 @@ function detectComplexShape(topcodes) {
       apexCode = findApex(topcodes);
     }
     else{
-      apexCode == null;
+      apexCode = null;
     }
     
     //Populate a new array with non-Apex topcodes 
     for(i = 0; i<topcodes.length;i++){
       if(apexCode && (topcodes[i].code != apexCode.code)){
+        activeCodes.push(topcodes[i]);
+      }
+      else if(!(apexCode)){
         activeCodes.push(topcodes[i]);
       }
     }
@@ -207,22 +204,20 @@ function drawComplex(topcodes, apexCode) {
     ctx.strokeStyle="#0a0a0f";
     ctx.lineWidth=5;
 
-    //Feedback elements
-    var fdbk = document.querySelector("#video-canvas").getContext('2d');    
-    fdbk.font = "17.5px Raleway";
-    fdbk.fillStyle = "#000000";
-    var rectColor = "#FF0000";
-    var crossBeamColor = "#66b3ff";
+
+    var rectColor = "#F53240";
+    var crossBeamColor = "#F98F02";
+    var roofColor = "#02C8A7";
 
     var used_codes = [];
 
-  
+        var cross_beam = false;
+
     for(i = 0; i<topcodes.length; i++) {
       var tr = null;
       var bl = null;
       var br = null;
       var tl = null;
-      var cross_beam = false;
       
       for(j = 1; j<topcodes.length; j++) {
         // maybe add check to make sure they're a certain distance apart
@@ -246,9 +241,12 @@ function drawComplex(topcodes, apexCode) {
             br = topcodes[j];
             var rect = true;
 
+            //Draw Rect
             ctx.strokeStyle=rectColor;
             ctx.strokeRect(topcodes[i].x,topcodes[i].y,(br.x - topcodes[i].x),(br.y - topcodes[i].y));
             used_codes.push(topcodes[i].code, bl.code, tr.code, br.code)
+
+
             //Old Cross-Beam Logic
             if (cross_beam) {
               ctx.strokeStyle=crossBeamColor;
@@ -268,7 +266,7 @@ function drawComplex(topcodes, apexCode) {
             }
             //Simple Path to connect the apexCode to the rest of the rectangle
             if(apexCode){
-              ctx.strokeStyle=rectColor;
+              ctx.strokeStyle=roofColor;
 
               console.log("apex code detected");
               ctx.beginPath()
@@ -279,37 +277,64 @@ function drawComplex(topcodes, apexCode) {
 
             }
 
-            //Feedback if/else block. Pretty shit right now
-            if(rect && cross_beam){
-
-              fdbk.fillText("That wall looks good! Sweet X-Brace.",450,450);
-              fdbk.fillText("Real buildings use it too!",450,470);
-              fdbk.strokeStyle='#FFFFFF';
-              fdbk.strokeRect(435,100,350,250);
-              fdbk.fillText("Image of Hancock Tower Goes Here",450,200);
+            //Calls writeFeedback to call appropiate feedback
+            if(apexCode && rect && cross_beam){
+              writeFeedback('triangle');
+            }
+            else if(rect && cross_beam){
+              writeFeedback('crossBeam');
             }
             else if(rect){
-              fdbk.fillText("Awesome use of rectangles!",450,450);
-              fdbk.fillText("Make it more stable by adding something.",450,470);
-              fdbk.fillText("Look at the examples or out the window",450,490);
-              fdbk.fillText("for inspriation",450,510);
-
-            }
-            else{
-              fdbk.fillText("Build Better",450,450);
-            }            
+              writeFeedback('rectangle');
+            }          
 
             return used_codes;
 
           } 
         }
       }
-      if(topcodes.length == 0){
-        fdbk.fillText("Build Better",450,450);
-            }
     }
 
   }
+
+//Function that calls other Feedback Methods
+function writeFeedback(structure){
+    var fdbk = document.querySelector("#video-canvas").getContext('2d');    
+    fdbk.font = "17.5px Raleway";
+    fdbk.fillStyle = "#000000";
+    if(structure == 'crossBeam'){
+      crossBeamFeedback(fdbk);
+    }
+    else if(structure == 'rectangle'){
+      rectFeedback(fdbk);
+    }
+    else if(structure == 'triangle'){
+      triFeedback(fdbk);
+    }
+
+}
+
+//Feedback for Cross-beam + Rect
+function crossBeamFeedback(fdbk){
+              fdbk.fillText("That wall looks good! Sweet X-Brace.",450,450);
+              fdbk.fillText("Real buildings use it too!",450,470);
+              fdbk.strokeStyle='#FFFFFF';
+              fdbk.strokeRect(435,100,350,250);
+              fdbk.fillText("Image of Hancock Tower Goes Here",450,200);
+}
+
+//Feedback for Rect
+function rectFeedback(fdbk){
+              fdbk.fillText("Awesome use of rectangles!",450,450);
+              fdbk.fillText("Make it more stable by adding something.",450,470);
+              fdbk.fillText("Look at the examples or out the window",450,490);
+              fdbk.fillText("for inspriation",450,510);
+}
+
+//Feedback for Cross-beam + Rect + Triangle
+function triFeedback(fdbk){
+              fdbk.fillText("YOU WIN",450,450);
+}
 
 // function detectTri(topcodes, used_codes) {
 //   console.log(used_codes);
