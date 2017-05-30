@@ -6,7 +6,10 @@
 
 <body>
   <canvas id="video-canvas" width="800" height="600" style="background: #ddd;"></canvas>
-  <br/>
+    <div id='d2' style="position:absolute; top:0px; left:600px; z-index:2">
+        <canvas id='feedbackCanvas' width='1000' height='600'>
+        </canvas>
+    </div>  <br/>
   <button id="camera-button" onclick="TopCodes.startStopVideoScan('video-canvas')">Start / Stop</button>
 
   <script src="topcodes.js"></script>

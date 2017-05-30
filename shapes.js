@@ -211,14 +211,14 @@ function drawComplex(topcodes, apexCode) {
 
     var used_codes = [];
 
-        var cross_beam = false;
 
     for(i = 0; i<topcodes.length; i++) {
       var tr = null;
       var bl = null;
       var br = null;
       var tl = null;
-      
+      var cross_beam = false;
+
       for(j = 1; j<topcodes.length; j++) {
         // maybe add check to make sure they're a certain distance apart
         if (Math.abs(topcodes[i].y - topcodes[j].y) < 65) {
@@ -299,7 +299,9 @@ function drawComplex(topcodes, apexCode) {
 
 //Function that calls other Feedback Methods
 function writeFeedback(structure){
-    var fdbk = document.querySelector("#video-canvas").getContext('2d');    
+  var canvas = document.getElementById("feedbackCanvas");
+  var fdbk  = canvas.getContext("2d");
+
     fdbk.font = "17.5px Raleway";
     fdbk.fillStyle = "#000000";
     if(structure == 'crossBeam'){
@@ -325,10 +327,18 @@ function crossBeamFeedback(fdbk){
 
 //Feedback for Rect
 function rectFeedback(fdbk){
-              fdbk.fillText("Awesome use of rectangles!",450,450);
-              fdbk.fillText("Make it more stable by adding something.",450,470);
-              fdbk.fillText("Look at the examples or out the window",450,490);
-              fdbk.fillText("for inspriation",450,510);
+              fdbk.fillText("Awesome use of rectangles!",350,100);
+              fdbk.fillText("Image of Rectangle blocks goes here",350,150);
+
+              fdbk.fillText("However, these rectangles can sway in the Chicago wind",350,200);
+
+
+              fdbk.fillText("Images of rectangle swaying",350,250);
+
+              //fdbk.strokeRect(600,150,700,200);
+
+
+
 }
 
 //Feedback for Cross-beam + Rect + Triangle
