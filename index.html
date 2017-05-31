@@ -1,19 +1,96 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>TopCodes Example</title>
+  <title>Reactive Skylines</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="topcodes.js"></script>
+  <script type="text/javascript" src="shapes.js"></script>
 </head>
 
 <body>
-  <canvas id="video-canvas" width="800" height="600" style="background: #ddd;"></canvas>
-    <div id='d2' style="position:absolute; top:0px; left:600px; z-index:2">
-        <canvas id='feedbackCanvas' width='1000' height='600'>
-        </canvas>
-    </div>  <br/>
-  <button id="camera-button" onclick="TopCodes.startStopVideoScan('video-canvas')">Start / Stop</button>
+  <canvas id="video-canvas" width="600" height="600" onclick="TopCodes.startStopVideoScan('video-canvas')"></canvas>
+  <div id="feedback-container">
+    <div class="feedback" id='default'>
+      <h1>Welcome to Skylines!</h1>
+      <h2>Click the left hand side of the page to begin video stream...</h2>
+    </div>
 
-  <script src="topcodes.js"></script>
-  <script type="text/javascript" src="shapes.js"></script>
+    <div class="feedback" id='rect'>
+      <div class="text-container">
+        <h1>Awesome use of rectangles!</h1>
+      </div>
+
+      <div class="img-container">
+        <img src="imgs/straightRect-min.jpg">
+      </div>
+
+      <div class="text-container">
+        <h2>However, rectangles by themselves can sway in the Chicago wind</h2>
+      </div>
+
+      <div class="img-container">
+        <img src="imgs/tiltedRect2-min.jpg">
+      </div>
+
+      <div class="text-container">
+        <h2>How might we fix this? (take a look at these buildings for hints)</h2>
+      </div>
+
+      <div class="img-container-2">
+        <img class="row" src="imgs/hancock.jpg">
+        <img class="row" src="imgs/hancock.jpg">
+      </div>
+
+    </div>
+
+    <div class="feedback" id='cross-beams'>
+      <div class="text-container">
+        <h1>Way to stablize the building!!</h1>
+        <h2>Though we should think about what happens when it snows and rains</h2>
+      </div>
+
+      <div class="img-container">
+        <img src="imgs/crossBraceIntact-min.jpg">
+      </div>
+
+      <div class="text-container">
+        <h2>Is the roof strong enough to support weight??</h2>
+      </div>
+
+      <div class="img-container">
+        <img src="imgs/crossBraceBroken-min.jpg">
+      </div>
+
+      <div class="text-container">
+        <h2>How might we fix this? (take a look at these buildings for hints)</h2>
+      </div>
+
+      <div class="img-container-2">
+        <img class="row row2" src="imgs/angleroof.jpg">
+        <img class="row row2" src="imgs/angleroof.jpg">
+      </div>
+
+    </div>
+
+    <div class="feedback" id='tri'>
+      <div class="text-container">
+        <h1>Way to go, that looks great!</h1>
+      </div>
+
+      <div class="img-container">
+        <img src="imgs/fullHouse-min.jpg">
+      </div>
+
+      <div class="text-container">
+        <h2>Keep tinkering!!</h2>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <br/>
 
   <script>
 

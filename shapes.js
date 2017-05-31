@@ -1,9 +1,4 @@
 function masterMethod(topcodes){
-  //Background elements
-    var bcg = document.querySelector("#video-canvas").getContext('2d');
-    bcg.font = "50px Raleway";
-    bcg.fillText("Welcome to Skyline!",0,50);
-
   if(topcodes.length==2){
     detectSingleBeam(topcodes)
   }
@@ -299,101 +294,46 @@ function drawComplex(topcodes, apexCode) {
 
 //Function that calls other Feedback Methods
 function writeFeedback(structure){
-  var canvas = document.getElementById("feedbackCanvas");
-  var fdbk  = canvas.getContext("2d");
-
-    fdbk.font = "17.5px Raleway";
-    fdbk.fillStyle = "#000000";
-    if(structure == 'crossBeam'){
-      crossBeamFeedback(fdbk);
-    }
-    else if(structure == 'rectangle'){
-      rectFeedback(fdbk);
-    }
-    else if(structure == 'triangle'){
-      triFeedback(fdbk);
-    }
+  if(structure == 'crossBeam'){
+    crossBeamFeedback();
+  }
+  else if(structure == 'rectangle'){
+    rectFeedback();
+  }
+  else if(structure == 'triangle'){
+    triFeedback();
+  }
 
 }
 
 //Feedback for Cross-beam + Rect
-function crossBeamFeedback(fdbk){
-              fdbk.fillText("That wall looks good! Sweet X-Brace.",450,450);
-              fdbk.fillText("Real buildings use it too!",450,470);
-              fdbk.strokeStyle='#FFFFFF';
-              fdbk.strokeRect(435,100,350,250);
-              fdbk.fillText("Image of Hancock Tower Goes Here",450,200);
+function crossBeamFeedback(){
+  hideDivs();
+
+  var cb_div = document.getElementById("cross-beams")
+  cb_div.style.display = "inline";
 }
 
 //Feedback for Rect
 function rectFeedback(fdbk){
-              fdbk.fillText("Awesome use of rectangles!",350,100);
-              fdbk.fillText("Image of Rectangle blocks goes here",350,150);
+  hideDivs();
 
-              fdbk.fillText("However, these rectangles can sway in the Chicago wind",350,200);
-
-
-              fdbk.fillText("Images of rectangle swaying",350,250);
-
-              //fdbk.strokeRect(600,150,700,200);
-
-
+  var rect_div = document.getElementById("rect")
+  rect_div.style.display = "inline";
 
 }
 
 //Feedback for Cross-beam + Rect + Triangle
 function triFeedback(fdbk){
-              fdbk.fillText("YOU WIN",450,450);
+  hideDivs();
+
+  var rect_div = document.getElementById("tri")
+  rect_div.style.display = "inline";
 }
 
-// function detectTri(topcodes, used_codes) {
-//   console.log(used_codes);
-//   var ctx = document.querySelector("#video-canvas").getContext('2d');
-
-//   if(used_codes) {
-//      for(i = 0; i<topcodes.length; i++) {
-//         var left = null;
-//         var right = null;
-//         var top = null;
-
-//         for(j = 1; j<topcodes.length; j++) {
-//           if (Math.abs(topcodes[i].y - topcodes[j].y) < 65) {
-//             console.log('found left and right');
-//             left = topcodes[j];
-//             right = topcodes[i]
-//           }
-//         }
-
-//         if(left && right) {
-//           for(j = 1; j<topcodes.length; j++) { 
-//             console.log(topcodes[j].angle);
-//             if (topcodes[j].angle < .5) {
-//               top = topcodes[j];
-
-//               ctx.strokeStyle="#00e64d";
-//               ctx.beginPath();
-//               ctx.moveTo(left.x, left.y);
-//               ctx.lineTo(right.x, right.y);
-//               ctx.stroke();
-
-
-//               ctx.beginPath();
-//               ctx.moveTo(right.x, right.y);
-//               ctx.lineTo(top.x, top.y);
-//               ctx.stroke();
-
-//               ctx.beginPath();
-//               ctx.moveTo(top.x, top.y);
-//               ctx.lineTo(left.x, left.y);
-//               ctx.stroke();
-
-//               return
-//             }
-//           }
-//         }
-//      }
-//   }
-//   else {
-//     return
-//   }
-// }
+function hideDivs() {
+  var divs = document.getElementsByClassName("feedback");
+  for(var i = 0; i < divs.length; i++){
+   divs[i].style.display = "none";
+  }
+}
